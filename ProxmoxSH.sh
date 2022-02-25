@@ -32,7 +32,7 @@ showMenu() {
   3. \033[32m更改 KVM VM 硬件设置\033[0m \033[31m[施工中]\033[0m
   4. \033[32m更改 Cloud-Init 设置\033[0m \033[31m[施工中]\033[0m
 
-  0. \033[32m一键获取系统镜像模板\033[0m
+  0. \033[32m一键获取操作系统模板\033[0m
 
   -----------------------------------------------
   "
@@ -117,8 +117,20 @@ CreateVM() {
   echo -e -n "  # \033[32m请输入新建 VM 的硬盘增加容量 (单位 GB)\033[0m: "
   read vmdisk
 
+  echo -e -n "  # \033[32m请输入新建 VM 的用户 (不建议填写 root)\033[0m: "
+  read vmuser
+
+  echo -e -n "  # \033[32m请输入新建 VM 用户 ${vmuser} 的密码\033[0m: "
+  read vmuserpasswd
+
   echo -e -n "  # \033[32m请输入新建 VM 使用的网桥 (不知道请填写 vmbr0)\033[0m: "
   read vmnetworkbridge
+
+  echo -e -n "  # \033[32m请输入新建 VM 的 IPv4 地址 (例如 10.0.0.233/24)\033[0m: "
+  read vmnetworkipv4
+
+  echo -e -n "  # \033[32m请输入新建 VM 的 IPv4 网关 (例如 10.0.0.1)\033[0m: "
+  read vmnetworkipv4gw
 
   echo -e -n "  # \033[32m请输入新建 VM 网卡的限速设置 (单位 MB/s)\033[0m: "
   read vmnetworkrate
@@ -129,9 +141,13 @@ CreateVM() {
   \033[32m  VMID\033[0m:               ${vmid}
   \033[32m  VM 名字\033[0m:            ${vmname}
   \033[32m  VM 操作系统\033[0m:        ${INSTALLOSDIR}
+  \033[32m  VM 用户名\033[0m:          ${vmuser}
+  \033[32m  VM 用户密码\033[0m:        ${vmuserpasswd}
   \033[32m  VM CPU Core\033[0m:        ${vmcpucore}
   \033[32m  VM CPU 内存\033[0m:        ${vmmem}
   \033[32m  VM 硬盘增加容量\033[0m:    ${vmdisk}
+  \033[32m  VM Network IPv4\033[0m:    ${vmnetworkipv4}
+  \033[32m  VM Network IPv4 GW\033[0m: ${vmnetworkipv4gw}
   \033[32m  VM Network Bridge\033[0m:  ${vmnetworkbridge}
   \033[32m  VM Network Rate\033[0m:    ${vmnetworkrate}
   "
@@ -142,7 +158,7 @@ CreateVM() {
   ehco
   echo -e "  # \033[32m开始创建\033[0m"
 
-  echo -e "  # \033[32m创建 VM\033[0m"
+  echo -e "  # \033[32m创建 VM 并设置网卡\033[0m"
   qm create ${vmid} --name ${vmname} --cores ${vmcpucore} --memory ${vmmem} --net0 virtio,bridge=${vmnetworkbridge},rate=${vmnetworkrate}
   echo -e "  # \033[32m导入磁盘\033[0m"
   qm importdisk ${vmid} ${INSTALLOSDIR} ${PVESTORANGE} --format qcow2
@@ -152,6 +168,10 @@ CreateVM() {
   qm resize ${vmid} virtio0 ${vmdisk}
   echo -e "  # \033[32m添加 Cloud-Init CDROM 驱动器\033[0m"
   qm set ${vmid} --ide2 ${PVESTORANGE}:cloudinit
+  echo -e "  # \033[32m设置用户名和密码\033[0m"
+  qm set ${vmid} --ciuser ${vmuser} --cipassword ${vmuserpasswd}
+  echo -e "  # \033[32m设置 IPv4 地址\033[0m"
+  qm set ${vmid} --ipconfig0 gw=${vmnetworkipv4gw},ip=${vmnetworkipv4}
   echo -e "  # \033[32m设置启动磁盘\033[0m"
   qm set ${vmid} --boot c --bootdisk virtio0
   echo -e "  # \033[32m启用 Xterm.js\033[0m"

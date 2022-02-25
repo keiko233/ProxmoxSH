@@ -34,6 +34,7 @@ showMenu() {
   3. \033[32m更改 KVM VM 硬件设置\033[0m \033[31m[施工中]\033[0m
   4. \033[32m更改 Cloud-Init 设置\033[0m \033[31m[施工中]\033[0m
 
+  9. \033[32m一键获取最新脚本\033[0m
   0. \033[32m一键获取操作系统模板\033[0m
 
   -----------------------------------------------
@@ -51,6 +52,9 @@ showMenu() {
     ;;
   4)
     CloudInit
+    ;;
+  9)
+    Update
     ;;
   0)
     DownloadTemplateImages
@@ -406,6 +410,15 @@ CloudInitNetwork() {
 
   echo
   echo -e "  # \033[32m设置完成，请按回车键回到 CloudInit 菜单\033[0m"
+  read
+  showMenu
+}
+
+Update() {
+  echo -e "  # \033[32m开始更新脚本\033[0m"
+  curl https://raw.githubusercontent.com/keiko233/ProxmoxSH/master/ProxmoxSH.sh -o /usr/bin/ProxmoxSH
+  chmod +x /usr/bin/ProxmoxSH
+  echo -e "  # \033[32m脚本更新完成，请按回车键回到主菜单\033[0m"
   read
   showMenu
 }

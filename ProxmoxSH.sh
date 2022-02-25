@@ -13,12 +13,14 @@ CENTOS7IMAGE="/centos-7.qcow2c"
 
 PVESTORANGE="local"
 
+VERSION="0.1.1"
+
 showMenu() {
   clear
 
   echo -e "
 
-  ------------ \033[34mProxmox VE 管理小脚本\033[0m ------------
+  -------- \033[34mProxmox VE 管理小脚本\033[0m [\033[31m${VERSION}\033[0m] --------
   
   * \033[31mkeiko's Github\033[0m:    \033[32mhttps://github.com/keiko233\033[0m
   * \033[31mTelegram Channel\033[0m:  \033[32mhttps://t.me/keiko_gugu\033[0m
@@ -46,6 +48,9 @@ showMenu() {
     ;;
   2)
     ReinstallVM
+    ;;
+  4)
+    CloudInit
     ;;
   0)
     DownloadTemplateImages
@@ -155,7 +160,7 @@ CreateVM() {
   echo -e -n "  # \033[31m确认无误后按回车键开始创建\033[0m"
   read
 
-  ehco
+  echo
   echo -e "  # \033[32m开始创建\033[0m"
 
   echo -e "  # \033[32m创建 VM 并设置网卡\033[0m"
@@ -179,7 +184,7 @@ CreateVM() {
   echo -e "  # \033[32m启动虚拟机\033[0m"
   qm start ${vmid}
 
-  ehco
+  echo
   echo -e "  # \033[32m完成创建，请按回车键回到主菜单\033[0m"
   read
   showMenu
@@ -258,6 +263,153 @@ ReinstallVM() {
   read
   showMenu
 }
+
+CloudInit() {
+  clear
+
+  echo
+  echo -e "  --------------- \033[34mCloud-Init 设置\033[0m ---------------\n"
+
+  echo -e "
+  1. \033[32m重设虚拟机用户名和密码\033[0m
+  2. \033[32m设置虚拟机网络相关\033[0m
+  "
+
+  echo -e "  -----------------------------------------------\n"
+  echo -e -n "  # \033[32m请输入需要设置的选项数字\033[0m: "
+  read choosenum
+  echo
+
+  if [ "$choosenum" = "1" ]; then
+    qm list
+    echo
+
+    echo -e -n "  # \033[32m请输入需要设置的虚拟机 VMID\033[0m: "
+    read vmid
+
+    echo -e -n "  # \033[32m请输入新建 VM 的用户 (不建议填写 root)\033[0m: "
+    read vmuser
+
+    echo -e -n "  # \033[32m请输入新建 VM 用户 ${vmuser} 的密码\033[0m: "
+    read vmuserpasswd
+
+    clear
+    echo -e "  -------------- \033[34m确认 KVM VM 的信息\033[0m -------------"
+    echo -e "
+  \033[32m  VMID\033[0m:               ${vmid}
+  \033[32m  VM 用户名\033[0m:          ${vmuser}
+  \033[32m  VM 用户密码\033[0m:        ${vmuserpasswd}
+  "
+
+    echo -e -n "  # \033[31m确认无误后按回车键开始修改\033[0m"
+    read
+    echo -e "  # \033[32m设置用户名和密码\033[0m"
+    qm set ${vmid} --ciuser ${vmuser} --cipassword ${vmuserpasswd}
+
+    echo
+    echo -e "  # \033[32m完成设置，请按回车键回到主菜单\033[0m"
+    read
+    showMenu
+  elif [ "$choosenum" = "2" ]; then
+    CloudInitNetwork
+  else
+    echo
+    echo -e "  # \033[31m输入不符合要求，请按回车键回到主菜单\033[0m"
+    read
+    showMenu
+  fi
+
+  echo
+  echo -e "  # \033[32m设置完成，请按回车键回到 CloudInit 菜单\033[0m"
+  read
+  showMenu
+}
+
+CloudInitNetwork() {
+  clear
+
+  echo
+  echo -e "  ------------- \033[34mCloud-Init 网络设置\033[0m -------------\n"
+
+  echo -e "
+  1. \033[32m设置虚拟机网络 IPv4 地址\033[0m
+  2. \033[32m设置虚拟机网卡速率\033[0m
+  "
+
+  echo -e "  -----------------------------------------------\n"
+  echo -e -n "  # \033[32m请输入需要的选项数字\033[0m: "
+  read choosenum
+  echo
+
+  if [ "$choosenum" = "1" ]; then
+    qm list
+    echo
+
+    echo -e -n "  # \033[32m请输入需要设置的虚拟机 VMID\033[0m: "
+    read vmid
+
+    echo -e -n "  # \033[32m请输入新建 VM 的 IPv4 地址 (例如 10.0.0.233/24)\033[0m: "
+    read vmnetworkipv4
+
+    echo -e -n "  # \033[32m请输入新建 VM 的 IPv4 网关 (例如 10.0.0.1)\033[0m: "
+    read vmnetworkipv4gw
+    
+    clear
+    echo -e "  -------------- \033[34m确认 KVM VM 的信息\033[0m -------------"
+    echo -e "
+  \033[32m  VMID\033[0m:               ${vmid}
+  \033[32m  VM Network IPv4\033[0m:    ${vmnetworkipv4}
+  \033[32m  VM Network IPv4 GW\033[0m: ${vmnetworkipv4gw}
+  "
+
+    echo -e -n "  # \033[31m确认无误后按回车键开始修改\033[0m"
+    read
+    echo -e "  # \033[32m设置 IPv4 网关和地址\033[0m"
+    qm set ${vmid} --ipconfig0 gw=${vmnetworkipv4gw},ip=${vmnetworkipv4}
+
+    echo
+    echo -e "  # \033[32m完成设置，请按回车键回到主菜单\033[0m"
+    read
+    showMenu
+  elif [ "$choosenum" = "2" ]; then
+    qm list
+    echo
+
+    echo -e -n "  # \033[32m请输入需要设置的虚拟机 VMID\033[0m: "
+    read vmid
+
+    echo -e -n "  # \033[32m请输入新建 VM 网卡的限速设置 (单位 MB/s)\033[0m: "
+    read vmnetworkrate
+    
+    clear
+    echo -e "  -------------- \033[34m确认 KVM VM 的信息\033[0m -------------"
+    echo -e "
+  \033[32m  VMID\033[0m:               ${vmid}
+  \033[32m  VM Network Rate\033[0m:    ${vmnetworkrate}
+  "
+
+    echo -e -n "  # \033[31m确认无误后按回车键开始修改\033[0m"
+    read
+    echo -e "  # \033[32m设置网卡速率\033[0m"
+    qm set ${vmid} --net0 virtio,rate=${vmnetworkrate}
+
+    echo
+    echo -e "  # \033[32m完成设置，请按回车键回到主菜单\033[0m"
+    read
+    showMenu
+  else
+    echo
+    echo -e "  # \033[31m输入不符合要求，请按回车键回到主菜单\033[0m"
+    read
+    showMenu
+  fi
+
+  echo
+  echo -e "  # \033[32m设置完成，请按回车键回到 CloudInit 菜单\033[0m"
+  read
+  showMenu
+}
+
 
 DownloadTemplateImages() {
   clear

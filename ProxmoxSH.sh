@@ -54,7 +54,7 @@ showMenu() {
     CloudInit
     ;;
   9)
-    Update
+    UpdateScript
     ;;
   0)
     DownloadTemplateImages
@@ -414,7 +414,7 @@ CloudInitNetwork() {
   showMenu
 }
 
-Update() {
+UpdateScript() {
   echo -e "  # \033[32m开始更新脚本\033[0m"
   curl https://raw.githubusercontent.com/keiko233/ProxmoxSH/master/ProxmoxSH.sh -o /usr/bin/ProxmoxSH
   chmod +x /usr/bin/ProxmoxSH

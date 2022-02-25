@@ -416,6 +416,7 @@ CloudInitNetwork() {
 
 UpdateScript() {
   echo -e "  # \033[32m开始更新脚本\033[0m"
+  rm -f /usr/bin/ProxmoxSH
   curl https://raw.githubusercontent.com/keiko233/ProxmoxSH/master/ProxmoxSH.sh -o /usr/bin/ProxmoxSH
   chmod +x /usr/bin/ProxmoxSH
   echo -e "  # \033[32m脚本更新完成，请按回车键回到主菜单\033[0m"

@@ -8,7 +8,7 @@
 复制以下内容在你的 PVE Shell 里运行。
 
 ```shell
-curl https://raw.githubusercontent.com/keiko233/ProxmoxSH/master/reinstall.sh -o /usr/bin/ProxmoxSH && chmod +x /usr/bin/ProxmoxSH
+curl https://raw.githubusercontent.com/keiko233/ProxmoxSH/master/ProxmoxSH.sh -o /usr/bin/ProxmoxSH && chmod +x /usr/bin/ProxmoxSH
 ProxmoxSH
 ```
 

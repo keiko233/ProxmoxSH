@@ -13,7 +13,7 @@ CENTOS7IMAGE="/centos-7.qcow2c"
 
 PVESTORANGE="local"
 
-VERSION="0.1.1"
+VERSION="0.1.2"
 
 showMenu() {
   clear
@@ -174,7 +174,7 @@ CreateVM() {
   echo -e "  # \033[32m挂载磁盘\033[0m"
   qm set ${vmid} --virtio0 ${PVESTORANGE}:${vmid}/vm-${vmid}-disk-0.qcow2
   echo -e "  # \033[32m扩容启动磁盘\033[0m"
-  qm resize ${vmid} virtio0 ${vmdisk}
+  qm resize ${vmid} virtio0 +${vmdisk}G
   echo -e "  # \033[32m添加 Cloud-Init CDROM 驱动器\033[0m"
   qm set ${vmid} --ide2 ${PVESTORANGE}:cloudinit
   echo -e "  # \033[32m设置用户名和密码\033[0m"

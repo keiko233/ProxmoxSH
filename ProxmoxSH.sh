@@ -14,7 +14,7 @@ CENTOS7IMAGE="/centos-7.qcow2c"
 
 PVESTORANGE="local"
 
-VERSION="0.1.2"
+VERSION="0.1.3"
 
 showMenu() {
   clear

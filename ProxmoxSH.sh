@@ -9,6 +9,7 @@ DEBIAN10IMAGE="/debian-10.qcow2"
 DEBIAN11IMAGE="/debian-11.qcow2"
 UBUNTU18IMAGE="/ubuntu-18-04.qcow2"
 UBUNTU20IMAGE="/ubuntu-20-04.qcow2"
+UBUNTU22IMAGE="/ubuntu-22-04.qcow2"
 CENTOS7IMAGE="/centos-7.qcow2c"
 
 PVESTORANGE="local"
@@ -83,6 +84,7 @@ CreateVM() {
 
   5. \033[32mUbuntu 18.04 LTS\033[0m
   6. \033[32mUbuntu 20.04 LTS\033[0m
+  7. \033[32mUbuntu 22.04 LTS\033[0m
   "
 
   echo -e -n "  # \033[32m请输入新建 VM 的操作系统\033[0m: "
@@ -104,6 +106,8 @@ CreateVM() {
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE}
   elif [ "$installosid" = "6" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU20IMAGE}
+  elif [ "$installosid" = "7" ]; then
+    INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU22IMAGE}
   else
     echo
     echo -e "  # \033[31m输入不符合要求，请按回车键回到创建 VM 菜单\033[0m"
@@ -216,6 +220,7 @@ ReinstallVM() {
 
   5. \033[32mUbuntu 18.04 LTS\033[0m
   6. \033[32mUbuntu 20.04 LTS\033[0m
+  7. \033[32mUbuntu 22.04 LTS\033[0m
   "
 
   echo -e -n "  # \033[32m请输入需要重装小鸡的系统\033[0m: "
@@ -237,6 +242,8 @@ ReinstallVM() {
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE}
   elif [ "$installosid" = "6" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU20IMAGE}
+  elif [ "$installosid" = "7" ]; then
+    INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU22IMAGE}
   else
     echo
     echo -e "  # \033[31m输入不符合要求，请按回车键回到主菜单\033[0m"
@@ -441,6 +448,8 @@ DownloadTemplateImages() {
   wget -nv https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img -O ${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE}
   echo -e "  # \033[32m开始下载 Ubuntu 20.04 LTS 镜像\033[0m"
   wget -nv https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img -O ${DATADIR}${IMAGESDIR}${UBUNTU20IMAGE}
+  echo -e "  # \033[32m开始下载 Ubuntu 22.04 LTS 镜像\033[0m"
+  wget -nv https://cloud-images.ubuntu.com/releases/jammy/release/ubuntu-22.04-server-cloudimg-amd64.img -O ${DATADIR}${IMAGESDIR}${UBUNTU20IMAGE}
   echo
   echo -e "  # \033[32m下载镜像完成，请按回车键回到主菜单\033[0m"
   read

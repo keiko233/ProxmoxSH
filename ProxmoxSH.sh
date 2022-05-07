@@ -76,37 +76,37 @@ CreateVM() {
   echo -e "  ----------------- \033[34m新建 KVM VM\033[0m -----------------"
 
   echo -e "
-  1. \033[32mCentOS 7\033[0m
-  2. \033[32mCentOS 8\033[0m
+  10. \033[32mCentOS 7\033[0m
+  11. \033[32mCentOS 8\033[0m
 
-  3. \033[32mDebian 10\033[0m
-  4. \033[32mDebian 11\033[0m
+  20. \033[32mDebian 10\033[0m
+  21. \033[32mDebian 11\033[0m
 
-  5. \033[32mUbuntu 18.04 LTS\033[0m
-  6. \033[32mUbuntu 20.04 LTS\033[0m
-  7. \033[32mUbuntu 22.04 LTS\033[0m
+  30. \033[32mUbuntu 18.04 LTS\033[0m
+  31. \033[32mUbuntu 20.04 LTS\033[0m
+  32. \033[32mUbuntu 22.04 LTS\033[0m
   "
 
   echo -e -n "  # \033[32m请输入新建 VM 的操作系统\033[0m: "
   read installosid
 
-  if [ "$installosid" = "1" ]; then
+  if [ "$installosid" = "10" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${CENTOS7IMAGE}
-  elif [ "$installosid" = "2" ]; then
+  elif [ "$installosid" = "11" ]; then
     echo
     echo -e "  # \033[31m还有人敢在生产环境用 CentOS 8\033[0m ?"
     echo -e "  # \033[32m请按回车键回到创建 VM 菜单\033[0m"
     read
     CreateVM
-  elif [ "$installosid" = "3" ]; then
+  elif [ "$installosid" = "20" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${DEBIAN10IMAGE}
-  elif [ "$installosid" = "4" ]; then
+  elif [ "$installosid" = "21" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${DEBIAN11IMAGE}
-  elif [ "$installosid" = "5" ]; then
+  elif [ "$installosid" = "30" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE}
-  elif [ "$installosid" = "6" ]; then
+  elif [ "$installosid" = "31" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU20IMAGE}
-  elif [ "$installosid" = "7" ]; then
+  elif [ "$installosid" = "32" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU22IMAGE}
   else
     echo
@@ -212,37 +212,37 @@ ReinstallVM() {
   read vmid
 
   echo -e "
-  1. \033[32mCentOS 7\033[0m
-  2. \033[32mCentOS 8\033[0m
+  10. \033[32mCentOS 7\033[0m
+  11. \033[32mCentOS 8\033[0m
 
-  3. \033[32mDebian 10\033[0m
-  4. \033[32mDebian 11\033[0m
+  20. \033[32mDebian 10\033[0m
+  21. \033[32mDebian 11\033[0m
 
-  5. \033[32mUbuntu 18.04 LTS\033[0m
-  6. \033[32mUbuntu 20.04 LTS\033[0m
-  7. \033[32mUbuntu 22.04 LTS\033[0m
+  30. \033[32mUbuntu 18.04 LTS\033[0m
+  31. \033[32mUbuntu 20.04 LTS\033[0m
+  32. \033[32mUbuntu 22.04 LTS\033[0m
   "
 
   echo -e -n "  # \033[32m请输入需要重装小鸡的系统\033[0m: "
   read installosid
 
-  if [ "$installosid" = "1" ]; then
+  if [ "$installosid" = "10" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${CENTOS7IMAGE}
-  elif [ "$installosid" = "2" ]; then
+  elif [ "$installosid" = "11" ]; then
     echo
     echo -e "  # \033[31m还有人敢在生产环境用 CentOS 8\033[0m ?"
-    echo -e "  # \033[32m请按回车键回到主菜单\033[0m"
+    echo -e "  # \033[32m请按回车键回到创建 VM 菜单\033[0m"
     read
-    showMenu
-  elif [ "$installosid" = "3" ]; then
+    CreateVM
+  elif [ "$installosid" = "20" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${DEBIAN10IMAGE}
-  elif [ "$installosid" = "4" ]; then
+  elif [ "$installosid" = "21" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${DEBIAN11IMAGE}
-  elif [ "$installosid" = "5" ]; then
+  elif [ "$installosid" = "30" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE}
-  elif [ "$installosid" = "6" ]; then
+  elif [ "$installosid" = "31" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU20IMAGE}
-  elif [ "$installosid" = "7" ]; then
+  elif [ "$installosid" = "32" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU22IMAGE}
   else
     echo

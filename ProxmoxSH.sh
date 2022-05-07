@@ -447,7 +447,7 @@ DownloadTemplateImages() {
   echo -e "  # \033[32m开始下载 Ubuntu 20.04 LTS 镜像\033[0m"
   curl -# -o ${DATADIR}${IMAGESDIR}${UBUNTU20IMAGE} -O https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
   echo -e "  # \033[32m开始下载 Ubuntu 22.04 LTS 镜像\033[0m"
-  curl -# -o ${DATADIR}${IMAGESDIR}${UBUNTU20IMAGE} -O https://cloud-images.ubuntu.com/releases/jammy/release/ubuntu-22.04-server-cloudimg-amd64.img
+  curl -# -o ${DATADIR}${IMAGESDIR}${UBUNTU22IMAGE} -O https://cloud-images.ubuntu.com/releases/jammy/release/ubuntu-22.04-server-cloudimg-amd64.img
   echo
   echo -e "  # \033[32m下载镜像完成，请按回车键回到主菜单\033[0m"
   read

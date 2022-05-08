@@ -1,5 +1,7 @@
 # ProxmoxSH 可能方便一点的 PVE Shell 工具
 
+![](https://raw.githubusercontent.com/keiko233/ProxmoxSH/master/assets/images/screenshot01.jpg)
+
 ## 免责声明
 此脚本出于自用用途，如果你需要使用的话, 不保证其可用性。如果有问题，请提issue，我也不一定会看（
 

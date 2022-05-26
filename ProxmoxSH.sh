@@ -7,6 +7,7 @@ IMAGESDIR="/images"
 
 DEBIAN10IMAGE="/debian-10.qcow2"
 DEBIAN11IMAGE="/debian-11.qcow2"
+UBUNTU16IMAGE="/ubuntu-16-04.qcow2"
 UBUNTU18IMAGE="/ubuntu-18-04.qcow2"
 UBUNTU20IMAGE="/ubuntu-20-04.qcow2"
 UBUNTU22IMAGE="/ubuntu-22-04.qcow2"
@@ -82,12 +83,13 @@ CreateVM() {
   20. \033[32mDebian 10\033[0m
   21. \033[32mDebian 11\033[0m
 
-  30. \033[32mUbuntu 18.04 LTS\033[0m
-  31. \033[32mUbuntu 20.04 LTS\033[0m
-  32. \033[32mUbuntu 22.04 LTS\033[0m
+  30. \033[32mUbuntu 16.04 LTS\033[0m
+  31. \033[32mUbuntu 18.04 LTS\033[0m
+  32. \033[32mUbuntu 20.04 LTS\033[0m
+  33. \033[32mUbuntu 22.04 LTS\033[0m
   "
 
-  echo -e -n "  # \033[32m请输入新建 VM 的操作系统\033[0m: "
+  echo -e -n "  # \033[32m请输入需要重装小鸡的系统\033[0m: "
   read installosid
 
   if [ "$installosid" = "10" ]; then
@@ -103,10 +105,12 @@ CreateVM() {
   elif [ "$installosid" = "21" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${DEBIAN11IMAGE}
   elif [ "$installosid" = "30" ]; then
-    INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE}
+    INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU16IMAGE}
   elif [ "$installosid" = "31" ]; then
-    INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU20IMAGE}
+    INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE}
   elif [ "$installosid" = "32" ]; then
+    INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU20IMAGE}
+  elif [ "$installosid" = "33" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU22IMAGE}
   else
     echo
@@ -218,9 +222,10 @@ ReinstallVM() {
   20. \033[32mDebian 10\033[0m
   21. \033[32mDebian 11\033[0m
 
-  30. \033[32mUbuntu 18.04 LTS\033[0m
-  31. \033[32mUbuntu 20.04 LTS\033[0m
-  32. \033[32mUbuntu 22.04 LTS\033[0m
+  30. \033[32mUbuntu 16.04 LTS\033[0m
+  31. \033[32mUbuntu 18.04 LTS\033[0m
+  32. \033[32mUbuntu 20.04 LTS\033[0m
+  33. \033[32mUbuntu 22.04 LTS\033[0m
   "
 
   echo -e -n "  # \033[32m请输入需要重装小鸡的系统\033[0m: "
@@ -239,10 +244,12 @@ ReinstallVM() {
   elif [ "$installosid" = "21" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${DEBIAN11IMAGE}
   elif [ "$installosid" = "30" ]; then
-    INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE}
+    INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU16IMAGE}
   elif [ "$installosid" = "31" ]; then
-    INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU20IMAGE}
+    INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE}
   elif [ "$installosid" = "32" ]; then
+    INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU20IMAGE}
+  elif [ "$installosid" = "33" ]; then
     INSTALLOSDIR=${DATADIR}${IMAGESDIR}${UBUNTU22IMAGE}
   else
     echo
@@ -436,7 +443,7 @@ DownloadTemplateImages() {
   clear
 
   mkdir -p ${DATADIR}${IMAGESDIR}
- echo -e "  # \033[32m开始下载 Debian 10 镜像\033[0m"
+  echo -e "  # \033[32m开始下载 Debian 10 镜像\033[0m"
   wget https://cloud.debian.org/images/cloud/buster/latest/debian-10-generic-amd64.qcow2 -O ${DATADIR}${IMAGESDIR}${DEBIAN10IMAGE}
   curl -# -o ${DATADIR}${IMAGESDIR}${DEBIAN10IMAGE} -O https://cloud.debian.org/images/cloud/buster/latest/debian-10-generic-amd64.qcow2
   echo -e "  # \033[32m开始下载 Debian 11 镜像\033[0m"
@@ -445,6 +452,9 @@ DownloadTemplateImages() {
   echo -e "  # \033[32m开始下载 CentOS 7 镜像\033[0m"
   wget https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-2111.qcow2c -O ${DATADIR}${IMAGESDIR}${CENTOS7IMAGE}
   curl -# -o ${DATADIR}${IMAGESDIR}${CENTOS7IMAGE} -O https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-2111.qcow2c
+  echo -e "  # \033[32m开始下载 Ubuntu 16.04 LTS 镜像\033[0m"
+  wget https://cloud-images.ubuntu.com/releases/xenial/release/ubuntu-16.04-server-cloudimg-amd64-disk1.img -O ${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE}
+  curl -# -o ${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE} -O https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img
   echo -e "  # \033[32m开始下载 Ubuntu 18.04 LTS 镜像\033[0m"
   wget https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img -O ${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE}
   curl -# -o ${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE} -O https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img

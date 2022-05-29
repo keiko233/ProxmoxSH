@@ -450,7 +450,7 @@ DownloadTemplateImages() {
   echo -e "  # \033[32m开始下载 CentOS 7 镜像\033[0m"
   wget https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-2111.qcow2c -O ${DATADIR}${IMAGESDIR}${CENTOS7IMAGE}
   echo -e "  # \033[32m开始下载 Ubuntu 16.04 LTS 镜像\033[0m"
-  wget https://cloud-images.ubuntu.com/releases/xenial/release/ubuntu-16.04-server-cloudimg-amd64-disk1.img -O ${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE}
+  wget https://cloud-images.ubuntu.com/releases/xenial/release/ubuntu-16.04-server-cloudimg-amd64-disk1.img -O ${DATADIR}${IMAGESDIR}${UBUNTU16IMAGE}
   echo -e "  # \033[32m开始下载 Ubuntu 18.04 LTS 镜像\033[0m"
   wget https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img -O ${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE}
   echo -e "  # \033[32m开始下载 Ubuntu 20.04 LTS 镜像\033[0m"

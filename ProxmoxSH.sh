@@ -439,6 +439,8 @@ UpdateScript() {
 }
 
 DownloadTemplateImages() {
+  clear
+
   echo -e "
   ------------------ \033[34m模板下载\033[0m -------------------
 
@@ -467,7 +469,7 @@ DownloadTemplateImages() {
     ;;
   *)
     echo
-    echo -e "  # \033[31m输入有误，请按回车键回到模板下载\033[0m"
+    echo -e "  # \033[31m输入有误，请按回车键回到模板下载页面\033[0m"
     read
     DownloadTemplateImages
     ;;
@@ -492,6 +494,7 @@ DownloadTemplateImages_Official() {
   wget https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img -O ${DATADIR}${IMAGESDIR}${UBUNTU20IMAGE}
   echo -e "  # \033[32m开始下载 Ubuntu 22.04 LTS 镜像\033[0m"
   wget https://cloud-images.ubuntu.com/releases/jammy/release/ubuntu-22.04-server-cloudimg-amd64.img -O ${DATADIR}${IMAGESDIR}${UBUNTU22IMAGE}
+  
   echo -e "  # \033[32m下载镜像完成，请按回车键回到主菜单\033[0m"
   read
   showMenu

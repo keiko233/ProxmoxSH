@@ -15,7 +15,7 @@ CENTOS7IMAGE="/centos-7.qcow2c"
 
 PVESTORANGE="local"
 
-VERSION="0.1.4"
+VERSION="0.1.5"
 
 showMenu() {
   clear
@@ -438,8 +438,43 @@ UpdateScript() {
   ProxmoxSH
 }
 
-
 DownloadTemplateImages() {
+  echo -e "
+  ------------------ \033[34m模板下载\033[0m -------------------
+
+  1. \033[32m使用官方源下载\033[0m
+  2. \033[32m使用科技大学镜像源下载\033[0m
+
+  -------------------- \033[34m说明\033[0m ---------------------
+
+  \033[32m镜像包含:\033[0m Debian 10, Debian 11,
+            CentOS 7,
+            Ubuntu 16.04 LTS, Ubuntu 18.04 LTS,
+            Ubuntu 20.04 LTS, Ubuntu 22.04 LTS
+
+  -----------------------------------------------
+  "
+
+  echo -e -n "  # \033[32m请输入选项\033[0m [0-13]: "
+
+  read num
+  case ${num} in
+  1)
+    DownloadTemplateImages_Official
+    ;;
+  2)
+    DownloadTemplateImages_USTC_Mirror
+    ;;
+  *)
+    echo
+    echo -e "  # \033[31m输入有误，请按回车键回到模板下载\033[0m"
+    read
+    DownloadTemplateImages
+    ;;
+  esac
+}
+
+DownloadTemplateImages_Official() {
   clear
 
   mkdir -p ${DATADIR}${IMAGESDIR}
@@ -450,13 +485,37 @@ DownloadTemplateImages() {
   echo -e "  # \033[32m开始下载 CentOS 7 镜像\033[0m"
   wget https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-2111.qcow2c -O ${DATADIR}${IMAGESDIR}${CENTOS7IMAGE}
   echo -e "  # \033[32m开始下载 Ubuntu 16.04 LTS 镜像\033[0m"
-  wget https://cloud-images.ubuntu.com/releases/xenial/release/ubuntu-16.04-server-cloudimg-amd64-disk1.img -O ${DATADIR}${IMAGESDIR}${UBUNTU16IMAGE}
+  wget https://cloud-images.ubuntu.com/releases/xenial/release/ubuntu-16.04-server-cloudimg-amd64-disk1.img -O ${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE}
   echo -e "  # \033[32m开始下载 Ubuntu 18.04 LTS 镜像\033[0m"
   wget https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img -O ${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE}
   echo -e "  # \033[32m开始下载 Ubuntu 20.04 LTS 镜像\033[0m"
   wget https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img -O ${DATADIR}${IMAGESDIR}${UBUNTU20IMAGE}
   echo -e "  # \033[32m开始下载 Ubuntu 22.04 LTS 镜像\033[0m"
   wget https://cloud-images.ubuntu.com/releases/jammy/release/ubuntu-22.04-server-cloudimg-amd64.img -O ${DATADIR}${IMAGESDIR}${UBUNTU22IMAGE}
+  echo -e "  # \033[32m下载镜像完成，请按回车键回到主菜单\033[0m"
+  read
+  showMenu
+}
+
+DownloadTemplateImages_USTC_Mirror() {
+  clear
+
+  mkdir -p ${DATADIR}${IMAGESDIR}
+  echo -e "  # \033[32m开始下载 Debian 10 镜像\033[0m"
+  wget https://mirrors.ustc.edu.cn/debian-cdimage/cloud/buster/20220328-962/debian-10-generic-amd64-20220328-962.qcow2 -O ${DATADIR}${IMAGESDIR}${DEBIAN10IMAGE}
+  echo -e "  # \033[32m开始下载 Debian 11 镜像\033[0m"
+  wget https://mirrors.ustc.edu.cn/debian-cdimage/cloud/bullseye/20220711-1073/debian-11-generic-amd64-20220711-1073.qcow2 -O ${DATADIR}${IMAGESDIR}${DEBIAN11IMAGE}
+  echo -e "  # \033[32m开始下载 CentOS 7 镜像\033[0m"
+  wget https://mirrors.ustc.edu.cn/centos-cloud/centos/7/images/CentOS-7-aarch64-GenericCloud-2111.qcow2c -O ${DATADIR}${IMAGESDIR}${CENTOS7IMAGE}
+  echo -e "  # \033[32m开始下载 Ubuntu 16.04 LTS 镜像\033[0m"
+  wget https://mirrors.ustc.edu.cn/ubuntu-cloud-images/xenial/current/xenial-server-cloudimg-amd64-disk1.img -O ${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE}
+  echo -e "  # \033[32m开始下载 Ubuntu 18.04 LTS 镜像\033[0m"
+  wget https://mirrors.ustc.edu.cn/ubuntu-cloud-images/bionic/current/bionic-server-cloudimg-amd64.img -O ${DATADIR}${IMAGESDIR}${UBUNTU18IMAGE}
+  echo -e "  # \033[32m开始下载 Ubuntu 20.04 LTS 镜像\033[0m"
+  wget https://mirrors.ustc.edu.cn/ubuntu-cloud-images/focal/current/focal-server-cloudimg-amd64.img -O ${DATADIR}${IMAGESDIR}${UBUNTU20IMAGE}
+  echo -e "  # \033[32m开始下载 Ubuntu 22.04 LTS 镜像\033[0m"
+  wget https://mirrors.ustc.edu.cn/ubuntu-cloud-images/jammy/current/jammy-server-cloudimg-amd64.img -O ${DATADIR}${IMAGESDIR}${UBUNTU22IMAGE}
+
   echo -e "  # \033[32m下载镜像完成，请按回车键回到主菜单\033[0m"
   read
   showMenu
